@@ -1,0 +1,19 @@
+<script>
+    function hideNotices() {
+    const notices = document.querySelectorAll('.notice, .alert, .notice-aux');
+    notices.forEach(function(notice) {
+        setTimeout(function() {
+        notice.style.display = 'none';
+        }, 2000); // Oculta el elemento después de 3000 milisegundos (3 segundos)
+    });
+    }
+
+    document.addEventListener("turbo:load", function() {
+    hideNotices(); // Llama a la función para ocultar las alertas al cargar
+    });
+
+    // También llamamos a la función al cargar la página inicialmente
+    document.addEventListener("DOMContentLoaded", function() {
+    hideNotices();
+    });
+</script>
