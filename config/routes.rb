@@ -17,7 +17,9 @@ Rails.application.routes.draw do
     resource :dashboard, to: "artists#dashboard"
   end
 
-  resource :music, only: [ :show ], controller: :music
+  resource :music, only: [ :show ], controller: :music do
+    post "audio_player", to: "music#audio_player", on: :collection
+  end
 
   # Defines the root path route ("/")
   root "home#index"
