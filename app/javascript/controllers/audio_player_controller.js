@@ -2,9 +2,20 @@ import { Controller } from "@hotwired/stimulus";
 
 // Connects to data-controller="audio-player"
 export default class extends Controller {
-  static targets = ["currentTime", "duration", "range", "play", "pause"];
+  static targets = [
+    "currentTime",
+    "duration",
+    "range",
+    "play",
+    "pause",
+    "player",
+  ];
+
   connect() {
+    this.player = document.getElementById("audio-player-id");
+
     if (!window.audio) return;
+
     this.updatePlayButton();
     this.rangeTarget.value = 0;
 
@@ -35,6 +46,7 @@ export default class extends Controller {
   }
 
   updatePlayButton() {
+    this.actionPlayer(true);
     if (window.audio.paused) {
       if (!this.pauseTarget.classList.contains("hidden")) {
         this.pauseTarget.classList.add("hidden");
@@ -57,6 +69,31 @@ export default class extends Controller {
       "timeupdate",
       this.timeUpdateEventListener
     );
+  }
+
+  closeSong(e) {
+    e.preventDefault();
+
+    window.audio.pause();
+    this.updatePlayButton();
+    window.dispatchEvent(
+      new CustomEvent("audio-player:toggled", {
+        detail: {
+          audio_src: window.audio.src,
+        },
+      })
+    );
+
+    window.audio.currentTime = 0;
+    this.rangeTarget.value = 0;
+    this.actionPlayer(false);
+  }
+
+  actionPlayer(show) {
+    if (show && this.player.classList.contains("hidden"))
+      this.player.classList.remove("hidden");
+    if (!show && !this.player.classList.contains("hidden"))
+      this.player.classList.add("hidden");
   }
 }
 function formatTime(currentTime) {

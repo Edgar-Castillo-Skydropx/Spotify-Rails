@@ -1,4 +1,11 @@
-<div class="h-20 w-full bg-gray-700 flex items-center justify-center gap-4" data-controller="audio-player" data-action="music:toggled@window->audio-player#updatePlayButton">
+<div class="h-20 w-full bg-gray-700 flex items-center justify-center gap-4 relative" data-controller="audio-player" data-action="music:toggled@window->audio-player#updatePlayButton">
+  <%= link_to "", data: { action: "audio-player#closeSong" }, class: "absolute top-2 right-2 bg-red-500 rounded-full h-6 w-6 flex items-center justify-center hover:bg-red-600" do %>
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white font-bold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="18" y1="6" x2="6" y2="18" />
+      <line x1="6" y1="6" x2="18" y2="18" />
+    </svg>
+    <span class="sr-only">Close</span>
+  <% end %>
   <%= image_tag(song.image, class: "w-20 h-full object-cover p-2") %>
   <div>
     <p class="text-lg text-white"> <%= song.title %> </p>
