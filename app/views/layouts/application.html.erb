@@ -19,6 +19,7 @@
   </head>
 
   <body class="bg-gradient-to-b from-blue-800 to-purple-300">
+    <%= render "layouts/navbar" if !current_artist %>
     <%= render "layouts/alerts" %>
     <%= yield %>
     <div id="audio-player-id" class="fixed bottom-0 w-full">
