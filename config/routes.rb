@@ -18,6 +18,10 @@ Rails.application.routes.draw do
     resource :dashboard, to: "artists#dashboard"
   end
 
+  authenticated :user do
+    root "music#show", as: :authenticated_user_root
+  end
+
   resource :music, only: [ :show ], controller: :music do
     post "audio_player", to: "music#audio_player", on: :collection
   end
