@@ -62,6 +62,50 @@ Things you may want to cover:
 
 - rails g migration add_stage_name_to_artist
 
+## ADD @rails/request.js
+
+- bin/importmap pin @rails/request.js
+
+## ADD Stripe
+
+- bundle add stripe
+- bin/importmap pin @stripe/connect-js
+
+## ADD/Edit Credentials (Environment)
+
+- EDITOR=vi rails credentials:edit --environment=development
+- ctrl + c
+- :wq!
+
+```yml
+# aws:
+#   access_key_id: {{aws.access_key}}
+#   secret_access_key: {{aws.secret_key}}
+stripe:
+  pk: { { stripe.access_key } }
+  sk: { { stripe.secret_key } }
+  connect_client_id: { { stripe.connect_client_id } }
+```
+
+## Create Initializer/stripe.rb
+
+- Stripe.api_key = Rails.application.credentials.dig(:stripe, :sk)
+
+## Update Artist Model
+
+- after_create_commit :create_stripe_account
+
+```Ruby
+def create_stripe_account
+  stripe_account = Stripe::Account.create()
+  update(stripe_account_id: stripe_account.id)
+end
+```
+
+## Update All Artist Record
+
+- Artist.find_each(&:create_stripe_account)
+
 ## UNKNOWN
 
 - rails stimulus_reflex:install
