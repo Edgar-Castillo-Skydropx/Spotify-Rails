@@ -27,6 +27,10 @@ Things you may want to cover:
 
 - rails new spotify-rails -d postgresql -c tailwind
 
+## Add this into Gemfile
+
+- gem 'dotenv-rails', groups: [:development, :test]
+
 ## Generate Controller with Index Action
 
 - rails g controller home index
